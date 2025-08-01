@@ -69,6 +69,11 @@ pub trait I2CCoreTarget: I2CErrorType {
     ///                or a fresh start (`false`). A repeated start means the controller has not
     ///                released the bus between transactions.
     ///
+    /// # Return
+    ///
+    /// * `Ok(Some(data))` - If `direction` is `Read`, return a byte to immediately send to the controller.
+    /// * `Ok(None)` - No immediate data to send, or this is a write transaction.
+    /// * `Err(e)` - An error occurred during setup.
     /// # Usage Model
     ///
     /// This method is distinct from `on_address_match(address: u8) -> bool`:
@@ -96,7 +101,11 @@ pub trait I2CCoreTarget: I2CErrorType {
     ///     }
     /// }
     /// ```
-    fn on_transaction_start(&mut self, direction: TransactionDirection, repeated: bool);
+    fn on_transaction_start(
+        &mut self,
+        direction: TransactionDirection,
+        repeated: bool,
+    ) -> Result<Option<u8>, Self::Error>;
 
     /// Optional: handle stop condition or reset.
     ///
