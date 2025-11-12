@@ -1,0 +1,15 @@
+[package]
+name = "simulation"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+embedded-hal = "1"
+embedded-hal-bus = "0.3"
+drivers = { path = "../drivers"}
+proposed-traits = { path = "../proposed-traits" }
+rand = "0.8"
+rand_core = "0.6"
+sha2 = "0.10.9"
+p256 = "0.13.2"
+hmac = "0.12"
